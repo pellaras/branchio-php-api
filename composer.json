@@ -1,0 +1,22 @@
+{
+    "name": "buildsafe-tech/branchio-php-api",
+    "description": "Branch.io API for PHP",
+    "keywords": ["branch.io", "branchio", "branch", "api", "deeplink"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nick Ivlev",
+            "email": "nikolay.kotovsky@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0|^7.0",
+        "guzzlehttp/guzzle": "~5.3",
+        "symfony/options-resolver": "~2.7|^3.0"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": { "BranchIo\\": "src/" }
+
+    }
+}

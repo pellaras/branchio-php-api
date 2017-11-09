@@ -43,11 +43,9 @@ class BranchIo
     {
         $this->config = ($config ?: new Config());
         $this->client = ($client ?: new Client([
-            'defaults' => [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json'
-                ],
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json'
             ],
         ]));
     }
@@ -106,9 +104,9 @@ class BranchIo
     public function request($method, $uri, array $options = [])
     {
         try {
-            $request = $this->client->createRequest($method, self::API_URL . $uri, $options);
+            $response = $this->client->request($method, self::API_URL . $uri, $options);
 
-            return $this->client->send($request)->json();
+            return json_decode($response->getBody()->getContents());
         } catch (RequestException $e) {
             $response = $e->getResponse();
 
@@ -116,8 +114,8 @@ class BranchIo
                 $headers = $response->getHeaders();
 
                 if (!empty($headers['Content-Type']) && false !== strpos($headers['Content-Type'][0], 'application/json')) {
-                    $body = $response->json();
-                    $errors = (isset($body['errors']) ? $body['errors'] : []);
+                    $body = json_decode($response->getBody()->getContents());
+                    $errors = ($body->error ? [$body->error->message] : []);
 
                     if (404 === $response->getStatusCode()) {
                         $errors[] = 'Not Found';

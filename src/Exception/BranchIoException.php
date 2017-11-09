@@ -31,6 +31,7 @@ class BranchIoException extends \RuntimeException
     {
         $this->statusCode = $statusCode;
         $this->errors = $errors;
+        $this->message = $message;
     }
 
     /**
